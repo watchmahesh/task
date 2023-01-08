@@ -16,22 +16,15 @@
 
   <form action="/task/<%= task.id %>?_method=PUT" method="post" enctype="application/x-www-form-urlencoded">
     <div class="form-group">
-      <label for="usr">Name:</label>
+      <label for=""> Name <span style="color:red;">*</span></label>
       <input type="text" name="name" value="<%= task.name %>" class="form-control" id="">
     </div>
     <div class="form-group">
-      <label for="pwd">Short Description:</label>
+      <label for="">Short Description <span style="color:red;">*</span></label>
       <input type="text" name="short_description" value="<%= task.short_description %>" class="form-control" id="">
     </div>
-
-    <!-- <div class="form-group">
-      <label for="pwd">Date Time:</label>
-      <input type="text" name="date_time" value="<%= moment(task.date_time).format('yyyy-MM-DD, h:mm:ss a') %>" class="form-control" id="">
-
-    </div> -->
-
     <div class="form-group">
-      <label for="">Date Time:</label>
+      <label for="">Date Time <span style="color:red;">*</span></label>
     <div class='input-group date' id='datetimepicker1'>
       <input type='text' name="date_time" value="<%= moment(task.date_time).format('yyyy-MM-DD, h:mm:ss a') %>" class="form-control" />
       <span class="input-group-addon">
