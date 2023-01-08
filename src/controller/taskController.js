@@ -5,19 +5,20 @@ const moment = require("moment");
 let { Op } = require("sequelize");
 
 let taskController = {
-  index: async (req, res, fn) => {
+  index: async (req, res) => {
     try {
       return res.render("task/index");
     } catch (error) {
-      fn(error);
+      req.flash("error_msg", "something went wrong");
     }
   },
 
-  addView: async (req, res, fn) => {
+  addView: async (req, res) => {
     try {
       res.render("task/create");
     } catch (error) {
-      fn(error);
+      req.flash("error_msg", "something went wrong");
+
     }
   },
 
@@ -29,19 +30,12 @@ let taskController = {
       return res.redirect("back");
     }
     try {
-      const data = {
-        name: req.body.name,
-        short_description: req.body.short_description,
-        date_time: req.body.date_time,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      await taskService.add(data);
-
+      await taskService.add(req);
       req.flash("success_msg", "Task added successfully.");
       return res.redirect("/task");
     } catch (error) {
-      fn(error);
+      req.flash("error_msg", "Something went wrong.");
+
     }
   },
 
@@ -51,13 +45,17 @@ let taskController = {
       let query = { where: { id: taskId } };
       const task = await taskService.findOne(query);
       if (!task) {
-        return res.redirect("/404");
+        req.flash("error_msg", "Data not found");
+      return res.redirect("back");
       }
       return res.render("task/edit", {
         task,
         moment,
       });
-    } catch (e) {}
+    } catch (e) {
+      req.flash("error_msg", "something went wrong");
+
+    }
   },
 
   edit: async (req, res, fn) => {
@@ -69,17 +67,18 @@ let taskController = {
     }
     try {
       let id = req.params.id;
-      let updateData = {
-        name: req.body.name,
-        short_description: req.body.short_description,
-        date_time: req.body.date_time,
-        updatedAt: new Date(),
-      };
-      await taskService.findAndUpdate(id, updateData);
+      let query = { where: { id: id } };
+      const task = await taskService.findOne(query);
+      if (!task) {
+        req.flash("error_msg", "Data not found");
+      return res.redirect("back");
+      }
+      await taskService.findAndUpdate(id, req);
       req.flash("success_msg", "Task updated successfully");
-      return res.redirect("/task/");
+      return res.redirect("/task");
     } catch (error) {
-      fn(error);
+      req.flash("error_msg", error);
+
     }
   },
 
@@ -92,12 +91,12 @@ let taskController = {
       req.flash("success_msg", "Task deleted successfully.");
       return res.redirect("/task");
     } catch (error) {
-      req.flash("error_msg", "Something went wrong while deleting category");
+      req.flash("error_msg", "Something went wrong while deleting task");
       return res.redirect("back");
     }
   },
 
-  filter: async (req, res, fn) => {
+  filter: async (req, res) => {
     let data = {
       tasks: [],
     };
@@ -111,7 +110,7 @@ let taskController = {
       data["tasks"] = tasks;
       return res.json(data);
     } catch (error) {
-      fn(error);
+      
     }
   },
 };
