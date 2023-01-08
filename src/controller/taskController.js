@@ -14,12 +14,8 @@ let taskController = {
   },
 
   addView: async (req, res, fn) => {
-    const pageTitle = "Add Task";
-    let data = {
-      pageTitle: pageTitle,
-    };
     try {
-      res.render("task/create", data);
+      res.render("task/create");
     } catch (error) {
       fn(error);
     }
