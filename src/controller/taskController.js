@@ -58,7 +58,7 @@ let taskController = {
     }
   },
 
-  edit: async (req, res, fn) => {
+  edit: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       req.flash("errors", errors.mapped());
