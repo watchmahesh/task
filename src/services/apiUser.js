@@ -44,5 +44,15 @@ apiUserService.bycrptPassword = async(data)=>{
     let password =  await bcrypt.hashSync(data, bcrypt.genSaltSync(10), null);
     return password;
 };
+apiUserService.findOneWithpass = async (query) => {
+    let user = await ApiUser.findOne({ where: query.where });
+    return user;
+};
+apiUserService.findOneProfile = async(query) => {
+    let user = await ApiUser.findOne({
+        where: query.where,
+    });
+    return user;
+};
 
 module.exports = apiUserService;

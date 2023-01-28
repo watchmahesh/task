@@ -1,6 +1,6 @@
 module.exports = Object.freeze({
-    COPYRIGHT: 'Copyright 2022 Brasso',
-    COPYRIGHTEMAIL: 'info@brasso.com ',
+    COPYRIGHT: 'Copyright 2023 Aspirant Technology',
+    COPYRIGHTEMAIL: 'karki22mahesh@gmail.com ',
     SOURCE:"pointer\":\"/data/attributes/",
     CODE:'code',
     VERSION:'1.1',
@@ -15,15 +15,14 @@ module.exports = Object.freeze({
     MAINTENANCEMODETITLE : "Maintenance Mode",
     CUSTOMERCAREMESSAGE : "%message%",
     INVALIDCREDENTIALS: "Invalid credentials",
-    INVALIDPASSWORD: "パスワードが違います",
-    ACCOUNTDEACTIVATED: "アカウントが無効になっています。管理者にお問い合わせください。.",
+    INVALIDPASSWORD: "invalid password",
     INVALIDACCOUNT: "Invalid account",
-    INVALIDTOKEN: "無効なトークン",
+    INVALIDTOKEN: "invalid token",
     EXPIREDTOKEN: "Token expired",
-    USERNOTFOUND: "ユーザーが見つかりません",
-    USERNAMEPASSWORDINCORRECT: "ユーザーまたはパスワードが違います",
-    EMAILISREQUIRED: "メールアドレスは必須です",
-    PASSWORDISREQUIRED: "パスワードは必須です",
+    USERNOTFOUND: "user not found",
+    USERNAMEPASSWORDINCORRECT: "error from cath",
+    EMAILISREQUIRED: "Email is required",
+    PASSWORDISREQUIRED: "Password is required",
     USERNOTFOUNDLOGINBYFACEBOOK: "Please login via facebook since your account is linked with it.",
     USERNOTFOUNDLOGINBYAPPLE: "Please login via apple since your account is linked with it.",
     INVALIDREFRESHTOKEN: "Invalid refresh token. Please login.",
@@ -31,15 +30,8 @@ module.exports = Object.freeze({
     PASSWORDUPDATESUCCESSFULLY: "Password updated successfully.",
     EMAILCONFIRMSUCCESSFULLY: "Email confirmed successfully.",
     SUBSCRIPTIONSTATUSISINACTIVE: "Subscription status is inactive.",
-    SOMETHINGWENTWRONG: "何らかの不都合が発生しました.",
-    PRODUCTALREADYOWNED: "有料コンテンツは既に購入済です",
+    SOMETHINGWENTWRONG: "something went wrong.",
+    INVALIDREFRESHTOKEN: "invalid  Refresh token",
 
-    EMAIL_CODE: {
-        ACTIVATION: "email_verification",
-        NEWACCOUNT: "cms_user_email_verification",
-        FORGOTPASSWORD: "forgot_password",
-        NEWSLETTER: "news_letter_email_verification",
-        VERIFIEDEMAIL: "news_letter_email_verified",
-        STOREEMAIL: "store_user_detail_email"
-    }
+
 });
