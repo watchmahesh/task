@@ -1,4 +1,6 @@
 module.exports = {
     'userModel' : require('./user'),
-    'productModel':require('./product')
+    'productModel':require('./product'),
+    'categoryModel':require('./category'),
+    
 };

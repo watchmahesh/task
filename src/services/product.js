@@ -7,8 +7,8 @@ let productService = {};
 
 
 productService.findAll = async (query) => {
-    let users = await productModel.find(query.where).sort(query.sort).limit(query.limit).skip(query.offset);
-    return users;
+    let products = await productModel.find(query.where).populate('category_id').sort(query.sort).limit(query.limit).skip(query.offset);
+    return products;
 };
 
 
