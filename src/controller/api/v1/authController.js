@@ -1,32 +1,32 @@
 
 const _ = require("lodash");
-const Sequelize = require('sequelize');
 var jwt = require("jsonwebtoken");
-
 const { responseFormat } = require("../../../format/ResponseFormat");
 let CONSTANT = require('../../../constants/index');
-
-const { Config } = require("../../../models");
 let { apiUserService } = require("../../../services");
 const { singleErrorFormat } = require("../../../errors/singleErrorFormat");
 const { transformRegister,transformLogin, transformUser } = require("../../../transformer/authTransformer");
+const dotenv = require('dotenv');
+dotenv.config();
 let authController = {
   registerUser: async (req, res) => {
-    let user = await apiUserService.findOne({
-      where: { email: req.body.email },
-    });
     try {
+    let user = await apiUserService.findOne({email: req.body.email});
+    if(user){
+      return res.status(404).send({"status":"error", "message":"User not found."});
+    }
       let userData = {
-        email: req.body.email,
-        password: await apiUserService.bycrptPassword(req.body.password),
-        status: true,
-        username: req.body.username,
-        createdAt: Date.now(),
+        'first_name': req.body.first_name,
+        'last_name': req.body.last_name,
+        'email': req.body.email,
+        'username': req.body.username,
+        'status': 'inactive',
+        'password_method': 'is_password',
+        'created_at': new Date(),
+        'password': req.body.password,
       };
-      user = await apiUserService.add(userData);
-      return res
-        .status(200)
-        .send(responseFormat(transformRegister(req.body.email)));
+       await apiUserService.add(userData);
+      return res.status(200).send(responseFormat(transformRegister(req.body.email)));
     } catch (err) {
       return res.status(422).send(
         JSON.parse(
@@ -45,12 +45,8 @@ let authController = {
       if (requestData.grant_type == "refresh_token") {
         return refresToken(res, requestData);
       } else {
-        let user = await apiUserService.findOneWithpass({
-          where: Sequelize.where(
-            Sequelize.fn("lower", Sequelize.col("email")),
-            Sequelize.fn("lower", req.body.email)
-          ),
-        });
+        let user = await apiUserService.findOne({email: req.body.email});
+
 
         if (user) {
           let tokenDetails= await generateTokens(user);
@@ -79,14 +75,7 @@ let authController = {
         }
       }
     } catch (e) {
-      console.log(e);
-      return res
-        .status(422)
-        .send(
-          JSON.parse(
-            singleErrorFormat({
-              msg: CONSTANT.USERNAMEPASSWORDINCORRECT,
-              param: "user",
+      return res.status(422).send( JSON.parse(singleErrorFormat({msg: CONSTANT.USERNAMEPASSWORDINCORRECT,param: "user",
             })
           )
         );
@@ -95,8 +84,7 @@ let authController = {
 
   getMyProfile: async (req, res) => {
     try {
-
-        let profile = await apiUserService.findOneProfile({where: {id: req.apiUser.id}});
+        let profile = await apiUserService.findOne({ email: req.apiUser.email});
         if (profile) {
             return res.status(200).send(responseFormat(transformUser(profile)));
         } else {

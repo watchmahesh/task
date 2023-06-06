@@ -1,9 +1,13 @@
 
 NODE_ENV=development
 PORT=5000
-DB_NAME=task
+DB_NAME=TestMongo
 DB_HOST=localhost
 DB_PORT=3306
 DB_DRIVER=mysql
 DB_USERNAME=your ursename
 DB_PASSWORD=your password
+ACCESS_TOKEN_PRIVATE_KEY=your ursename
+ACCESS_TOKEN_EXPIRY_TIME=your password
+REFRESH_TOKEN_PRIVATE_KEY=your password
+REFRESH_TOKEN_EXPIRY_TIME=your password

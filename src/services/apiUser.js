@@ -1,58 +1,39 @@
 'use strict';
 
-const { ApiUser } = require('../models');
+const { userModel } = require('../models');
 const bcrypt = require('bcryptjs');
 
 let apiUserService = {};
 
-apiUserService.findAll = async(query) => {
-    let apiUsers = await ApiUser.findAll({
-        where: query.where,
-        limit: query.limit,
-        order: query.order,
-        offset: query.offset,
-        include:Professional
-    });
-    return apiUsers;
+
+apiUserService.findAll = async (query) => {
+    let users = await userModel.find(query.where).sort(query.sort).limit(query.limit).skip(query.offset);
+    return users;
 };
 
-apiUserService.count = async(query) => {
-    let resp = await ApiUser.count(query);
-    return resp;
+apiUserService.count = async (whereCondition) => {
+    const count = await userModel.find(whereCondition).countDocuments();
+    return count;
 };
 
 apiUserService.findOne = async(query) => {
-    let resp = await ApiUser.findOne(query);
-    return resp;
-};
-
-apiUserService.add = async(data) => {
-    let resp = await ApiUser.create(data);
-    return resp;
-};
-
-apiUserService.delete = async (id) => {
-    return ApiUser.destroy({ where: { id: id } });
-};
-
-apiUserService.findAndUpdate = async (id, userData) => {
-    let user = await ApiUser.update(userData, { where: { id:id } });
+    let user = await userModel.findOne(query);
     return user;
 };
 
-apiUserService.bycrptPassword = async(data)=>{
-    let password =  await bcrypt.hashSync(data, bcrypt.genSaltSync(10), null);
-    return password;
-};
-apiUserService.findOneWithpass = async (query) => {
-    let user = await ApiUser.findOne({ where: query.where });
+apiUserService.add = async (data) => {
+    let user = await new userModel(data).save();
     return user;
 };
-apiUserService.findOneProfile = async(query) => {
-    let user = await ApiUser.findOne({
-        where: query.where,
-    });
+
+apiUserService.findOneAndUpdate = async(query, updateData) => {
+    let user = await userModel.findOneAndUpdate(query, updateData);
     return user;
 };
+
+apiUserService.deleteOne = async(query) => {
+    return await userModel.deleteOne(query);
+};
+
 
 module.exports = apiUserService;

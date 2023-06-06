@@ -1,8 +1,7 @@
-const {apiUserService,tokenService,clientService } = require('../../services');
 const customError = require('../../errors/customError');
 const _ = require('lodash');
 const { singleErrorFormat } = require('../../errors/singleErrorFormat');
-var jwt = require("jsonwebtoken");
+let jwt = require("jsonwebtoken");
 
 exports.userValidateMiddleware = async (req, res, next) => {
     try {
