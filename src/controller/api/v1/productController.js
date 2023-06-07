@@ -63,6 +63,5 @@ const buildFilterQuery = (req) => {
   if (query.category_id) {
     filter.category_id = query.category_id;
   }
- 
   return filter;
 };
